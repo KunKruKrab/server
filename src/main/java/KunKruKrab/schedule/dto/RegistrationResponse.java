@@ -1,4 +1,8 @@
 package KunKruKrab.schedule.dto;
+import lombok.Data;
 
-public class RegistrationDto {
+@Data
+public class RegistrationResponse {
+    private String courseID;
+    private String name;
 }

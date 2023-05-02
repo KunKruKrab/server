@@ -1,2 +1,19 @@
-package KunKruKrab.schedule.model;public class Registration {
+package KunKruKrab.schedule.model;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import lombok.Data;
+import java.util.UUID;
+
+
+@Data
+@Entity
+public class Registration {
+
+    @Id
+    @GeneratedValue
+    private UUID id;
+    private String courseID;
+    private UUID userID;
 }
