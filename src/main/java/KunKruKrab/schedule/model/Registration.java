@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.Data;
+
+import java.time.Instant;
 import java.util.UUID;
 
 
@@ -16,4 +18,5 @@ public class Registration {
     private UUID id;
     private String courseID;
     private UUID userID;
+    private Instant createdAt;
 }
