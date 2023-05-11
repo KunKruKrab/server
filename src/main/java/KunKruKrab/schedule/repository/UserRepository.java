@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 public interface UserRepository extends JpaRepository<User, UUID>{
     
     // SELECT * FROM Member WHERE username = ‘username in parameter’
-    User findByUserEmail(String email);  
+    User findByEmail(String email);  
 }
