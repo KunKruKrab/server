@@ -40,7 +40,6 @@ public class SecurityConfig {
 
        .and()
                .formLogin()
-               .loginPage("/login")
                .defaultSuccessUrl("/home", true)
                .permitAll()
         .and()
@@ -48,7 +47,6 @@ public class SecurityConfig {
                .defaultSuccessUrl("/home", true)
        .and()
                .logout()
-               .logoutUrl("/logout")
                .clearAuthentication(true)
                .invalidateHttpSession(true)
                .deleteCookies("JSESSIONID", "remember-me")
