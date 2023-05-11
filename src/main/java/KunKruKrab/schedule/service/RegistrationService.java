@@ -3,6 +3,7 @@ package KunKruKrab.schedule.service;
 import KunKruKrab.schedule.dto.Registration.RegistrationRequest;
 import KunKruKrab.schedule.dto.Registration.RegistrationResponse;
 import KunKruKrab.schedule.model.Registration;
+import KunKruKrab.schedule.service.CourseService;
 import KunKruKrab.schedule.repository.RegistrationRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class RegistrationService {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private CourseService courseService;
 
     public List<Registration> getAll() {
         return repository.findAll();
@@ -48,8 +52,8 @@ public class RegistrationService {
 
     public void registerToCourse(RegistrationRequest registrationRequest) {
         Registration course = modelMapper.map(registrationRequest, Registration.class);
-//        course.setCourseID(getCourseIDByClassCode(registrationRequest.getClassCode()));
-        course.setCourseID("qwerty");
+        course.setCourseID(courseService.getCourseIdByClassCode(registrationRequest.getClassCode()));
+//        course.setCourseID("qwerty");
         course.setCreatedAt(Instant.now());
         repository.save(course);
     }

@@ -16,7 +16,7 @@ public class Registration {
     @Id
     @GeneratedValue
     private UUID id;
-    private String courseID;
+    private UUID courseID;
     private UUID userID;
     private Instant createdAt;
 }

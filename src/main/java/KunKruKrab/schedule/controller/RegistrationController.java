@@ -6,8 +6,6 @@ import KunKruKrab.schedule.model.Registration;
 import KunKruKrab.schedule.service.RegistrationService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
@@ -20,16 +18,16 @@ import java.util.UUID;
 public class RegistrationController {
 
     @Autowired
-    private RegistrationService service;
+    private RegistrationService registrationService;
 
     @GetMapping
     public List<Registration> getAll() {
-        return service.getAll();
+        return registrationService.getAll();
     }
 
     @GetMapping("/{id}")
     public List<RegistrationResponse> getRegistrationsByCourseID(@PathVariable UUID id) {
-        return service.getRegistrationByCourseID(id);
+        return registrationService.getRegistrationByCourseID(id);
     }
 
     @PostMapping
@@ -41,7 +39,7 @@ public class RegistrationController {
             String error = String.format("registration %s: %s", fieldError.getField(), fieldError.getDefaultMessage());
             return error;
         }
-        service.registerToCourse(registration);
+        registrationService.registerToCourse(registration);
         return "Register to course successfully";
 //        return new ResponseEntity<RegistrationRequest>(registration, HttpStatus.OK);
     }
