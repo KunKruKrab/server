@@ -34,8 +34,7 @@ public class SecurityConfig {
 
        http
                .authorizeRequests()
-               .antMatchers("/home", "/signup", 
-                            "/css/**", "/js/**").permitAll()
+               .antMatchers("/home").permitAll()
                .anyRequest().authenticated()
 
        .and()
