@@ -1,26 +1,79 @@
 package KunKruKrab.schedule.config;
 
+import KunKruKrab.schedule.service.UserDetailsServiceImp;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.context.ApplicationContext;
+import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http)
-            throws Exception {
-        http
-                .csrf().disable()
-                .authorizeRequests()
-                .anyRequest()
-                .permitAll();
+   @Autowired
+   private UserDetailsServiceImp userDetailsService;
+
+   @Autowired
+   private OidcUserService oidcUserService;
+
+   @Autowired
+   private ApplicationContext context;
 
 
-        return http.build();
-    }
+
+   @Bean
+   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+       http
+               .authorizeRequests()
+               .antMatchers("/home", "/signup", 
+                            "/css/**", "/js/**").permitAll()
+               .anyRequest().authenticated()
+
+       .and()
+               .formLogin()
+               .loginPage("/login")
+               .defaultSuccessUrl("/home", true)
+               .permitAll()
+        .and()
+               .oauth2Login()
+               .defaultSuccessUrl("/home", true)
+       .and()
+               .logout()
+               .logoutUrl("/logout")
+               .clearAuthentication(true)
+               .invalidateHttpSession(true)
+               .deleteCookies("JSESSIONID", "remember-me")
+               .permitAll();
+
+        ClientRegistrationRepository repository =
+                context.getBean(ClientRegistrationRepository.class);
+
+       if (repository != null) {
+           http
+                  .oauth2Login().clientRegistrationRepository(repository)
+                  .userInfoEndpoint().oidcUserService(oidcUserService).and()
+                  .loginPage("/login").permitAll();
+       }
+      return http.build();
+   }
+
+   @Bean
+   public PasswordEncoder encoder() {
+       return new BCryptPasswordEncoder(12);
+   }
+   @Override
+   public void configure(WebSecurity web) throws Exception {
+       web
+               .ignoring()
+               .antMatchers("/h2-console/**");
+   }
 }

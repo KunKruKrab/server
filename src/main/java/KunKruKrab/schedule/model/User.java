@@ -13,6 +13,7 @@ public class User {
     @Id
     @GeneratedValue
     private UUID id;
+    
     private String email;
     private String password;
     private String name;
