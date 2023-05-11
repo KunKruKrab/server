@@ -32,10 +32,11 @@ public class SecurityConfig {
    @Bean
    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-       http
-               .authorizeRequests()
-               .antMatchers("/home").permitAll()
-               .anyRequest().authenticated()
+        http
+                .csrf().disable()
+                .authorizeRequests()
+                .anyRequest()
+                .authenticated()
 
        .and()
                .formLogin()
