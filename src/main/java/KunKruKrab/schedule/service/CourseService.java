@@ -1,6 +1,7 @@
 package KunKruKrab.schedule.service;
 
 import KunKruKrab.schedule.dto.CourseRequest;
+import KunKruKrab.schedule.dto.CourseResponse;
 import KunKruKrab.schedule.model.Course;
 import KunKruKrab.schedule.repository.CourseRepository;
 import KunKruKrab.schedule.util.RandomClassCodeGenerator;
@@ -8,6 +9,9 @@ import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.time.Instant;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class CourseService {
@@ -16,6 +20,23 @@ public class CourseService {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    public List<CourseResponse> getCourses() {
+        List<Course> courses = repository.findAll();
+
+        List<CourseResponse> courseResponses = courses
+                .stream()
+                .map(restaurant -> modelMapper.map(restaurant,
+                        CourseResponse.class))
+                .collect(Collectors.toList());
+
+        return courseResponses;
+    }
+
+    public UUID getCourseIdByClassCode(String classCode) {
+        Course course = repository.findByClassCode(classCode);
+        return course.getId();
+    }
 
     public void create(CourseRequest restaurantRequest) {
         Course course = modelMapper.map(restaurantRequest, Course.class);
