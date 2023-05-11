@@ -37,7 +37,9 @@ public class RegistrationService {
         }
 
         try {
-            List<Registration> registrations = repository.findByCourseID(courseID);
+            List<Registration> registrations = repository.findAll();
+
+            registrations.removeIf(r -> !r.getId().equals(courseID));
 
             List<RegistrationResponse> dtos = registrations
                     .stream()
