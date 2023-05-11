@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface CourseRepository extends JpaRepository<Course, UUID> {}
+public interface CourseRepository extends JpaRepository<Course, UUID> {
+    Course findByClassCode(String classCode);
+}
