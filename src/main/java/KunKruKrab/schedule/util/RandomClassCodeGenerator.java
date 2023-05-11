@@ -3,7 +3,7 @@ package KunKruKrab.schedule.util;
 import java.util.Random;
 
 public class RandomClassCodeGenerator {
-    private static final String CHARACTERS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private static final String CHARACTERS = "0123456789abcdefghijklmnopqrstuvwxyz";
     private static final int CODE_LENGTH_MIN = 6;
     private static final int CODE_LENGTH_MAX = 7;
     private static final Random random = new Random();
