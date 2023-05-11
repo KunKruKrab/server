@@ -1,8 +1,12 @@
-package KunKruKrab.schedule.dto;
+package KunKruKrab.schedule.dto.Registration;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
+
+import java.util.UUID;
 
 @Data
 public class RegistrationRequest {
-    private String userID;
-    private String classCode;
+    @NotBlank
+    private String courseID;
+    private UUID userID;
 }
