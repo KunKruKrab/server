@@ -39,7 +39,7 @@ public class RegistrationService {
         try {
             List<Registration> registrations = repository.findAll();
 
-            registrations.removeIf(r -> !r.getId().equals(courseID));
+            registrations.removeIf(r -> !(r.getId().equals(courseID)));
 
             List<RegistrationResponse> dtos = registrations
                     .stream()
@@ -53,9 +53,9 @@ public class RegistrationService {
     }
 
     public void registerToCourse(RegistrationRequest registrationRequest) {
+        UUID courseID = courseService.getCourseIdByClassCode(registrationRequest.getClassCode());
         Registration course = modelMapper.map(registrationRequest, Registration.class);
-        course.setCourseID(courseService.getCourseIdByClassCode(registrationRequest.getClassCode()));
-//        course.setCourseID("qwerty");
+        course.setCourseID(courseID);
         course.setCreatedAt(Instant.now());
         repository.save(course);
     }
