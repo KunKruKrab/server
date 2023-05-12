@@ -4,19 +4,20 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.Data;
-
+import lombok.NoArgsConstructor;
 import java.time.Instant;
 import java.util.UUID;
 
-
 @Data
+@NoArgsConstructor
 @Entity
-public class Registration {
+public class Course {
 
     @Id
     @GeneratedValue
     private UUID id;
-    private UUID courseID;
-    private UUID userID;
+    private String classCode;
+    private String name;
+    private String description;
     private Instant createdAt;
 }
