@@ -1,5 +1,6 @@
 package KunKruKrab.schedule.model;
 
+import KunKruKrab.schedule.util.RandomClassCodeGenerator;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -14,7 +15,6 @@ import java.util.UUID;
 public class Course {
 
     @Id
-    @GeneratedValue
     private UUID id;
     private String classCode;
     private String name;
