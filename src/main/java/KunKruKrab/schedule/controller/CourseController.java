@@ -2,24 +2,25 @@ package KunKruKrab.schedule.controller;
 
 import KunKruKrab.schedule.dto.Course.CourseRequest;
 import KunKruKrab.schedule.dto.Course.CourseResponse;
-import KunKruKrab.schedule.dto.Registration.RegisterToCourseRequest;
 import KunKruKrab.schedule.dto.Schedule.ScheduleRequest;
-import KunKruKrab.schedule.model.Course;
-import KunKruKrab.schedule.model.Role;
-import KunKruKrab.schedule.model.Schedule;
-import KunKruKrab.schedule.model.User;
+import KunKruKrab.schedule.model.*;
 import KunKruKrab.schedule.service.CourseService;
-import KunKruKrab.schedule.service.RegistrationService;
 import KunKruKrab.schedule.service.ScheduleService;
 import KunKruKrab.schedule.service.UserService;
 import KunKruKrab.schedule.util.RandomClassCodeGenerator;
-import jakarta.validation.Valid;
+import io.github.bucket4j.Bandwidth;
+import io.github.bucket4j.Bucket;
+import io.github.bucket4j.Bucket4j;
+import io.github.bucket4j.Refill;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
@@ -37,8 +38,8 @@ public class CourseController {
     private UserService userService;
 
     @GetMapping
-    public List<CourseResponse> getCourses() {
-        return courseService.getCourses();
+    public ResponseEntity<List<CourseResponse>> getCourses() {
+        return ResponseEntity.ok(courseService.getCourses());
     }
 
     @PostMapping
