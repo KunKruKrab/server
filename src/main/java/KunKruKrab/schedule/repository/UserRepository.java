@@ -1,13 +1,23 @@
 package KunKruKrab.schedule.repository;
 
+import java.util.Optional;
 import java.util.UUID;
+
+import KunKruKrab.schedule.model.ERole;
 import KunKruKrab.schedule.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, UUID>{
-    
-    // SELECT * FROM Member WHERE username = ‘username in parameter’
-    User findByEmail(String email);  
+
+    Optional<User> findByUsername(String username);
+
+    Optional<User> findByRole(ERole role);
+
+    Optional<User> findByEmail(String email);
+
+    Boolean existsByUsername(String username);
+
+    Boolean existsByEmail(String email);
 }
