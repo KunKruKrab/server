@@ -8,6 +8,7 @@ import KunKruKrab.schedule.service.CourseService;
 import KunKruKrab.schedule.service.ScheduleService;
 import KunKruKrab.schedule.service.UserService;
 import KunKruKrab.schedule.util.RandomClassCodeGenerator;
+import KunKruKrab.schedule.util.CheckTimeValid;
 import io.github.bucket4j.Bandwidth;
 import io.github.bucket4j.Bucket;
 import io.github.bucket4j.Bucket4j;
@@ -66,6 +67,9 @@ public class CourseController {
         courseService.create(course, user.getId());
 
         for (ScheduleRequest schedule: courseRequest.getSchedule()) {
+            if (!CheckTimeValid.verify(schedule.getStartTime(), schedule.getEndTime())) {
+                return "End time cannot be scheduled before start time";
+            }
             Schedule s = new Schedule();
             s.setCourseID(courseID);
             s.setStartTime(schedule.getStartTime());
