@@ -74,11 +74,18 @@ public class RegistrationService {
         }
     }
 
-    public void registerToCourse(RegisterToCourseRequest registrationRequest) {
+    public boolean registerToCourse(RegisterToCourseRequest registrationRequest) {
+        List<UUID> coursesOfUser = getCourseIDByUserID(registrationRequest.getUserID());
         UUID courseID = courseService.getCourseIdByClassCode(registrationRequest.getClassCode());
+
+        for (UUID c: coursesOfUser) {
+            if (c.equals(courseID)) { return true; }
+        }
+
         Registration course = modelMapper.map(registrationRequest, Registration.class);
         course.setCourseID(courseID);
         course.setCreatedAt(Instant.now());
         repository.save(course);
+        return false;
     }
 }

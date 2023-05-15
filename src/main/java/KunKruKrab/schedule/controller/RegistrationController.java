@@ -51,7 +51,11 @@ public class RegistrationController {
         registerToCourse.setUserID(user.getId());
         registerToCourse.setClassCode(request.getClassCode());
 
-        registrationService.registerToCourse(registerToCourse);
+        boolean isRegistered = registrationService.registerToCourse(registerToCourse);
+
+        if (isRegistered) {
+            return "You have already registered for this course!";
+        }
         return "Register to course successfully";
     }
 }
