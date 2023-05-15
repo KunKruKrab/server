@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
+@CrossOrigin(allowCredentials = "true", origins = "http://localhost:3000")
 public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
 
     @Bean
-    @CrossOrigin(allowCredentials = "true", maxAge = 3600)
     public SecurityFilterChain filterChain(HttpSecurity http)
             throws Exception {
         http
