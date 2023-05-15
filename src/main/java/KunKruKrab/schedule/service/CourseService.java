@@ -38,10 +38,7 @@ public class CourseService {
         return course.getId();
     }
 
-    public void create(CourseRequest restaurantRequest) {
-        Course course = modelMapper.map(restaurantRequest, Course.class);
-        course.setClassCode(RandomClassCodeGenerator.generateCode());
-        course.setCreatedAt(Instant.now());
+    public void create(Course course) {
         repository.save(course);
     }
 }

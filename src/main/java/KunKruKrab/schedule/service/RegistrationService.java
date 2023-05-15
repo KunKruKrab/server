@@ -52,6 +52,27 @@ public class RegistrationService {
         }
     }
 
+    public List<UUID> getCourseIDByUserID(UUID userID) {
+        if (userID == null) {
+            throw new IllegalArgumentException("User ID cannot be null");
+        }
+
+        try {
+            List<Registration> registrations = repository.findAll();
+
+            registrations.removeIf(r -> !(r.getUserID().equals(userID)));
+
+            List<UUID> dtos = registrations
+                    .stream()
+                    .map(registration -> registration.getCourseID())
+                    .collect(Collectors.toList());
+
+            return dtos;
+        } catch (DataAccessException ex) {
+            throw new RuntimeException("Error retrieving registrations by course ID: " + ex.getMessage(), ex);
+        }
+    }
+
     public void registerToCourse(RegistrationRequest registrationRequest) {
         UUID courseID = courseService.getCourseIdByClassCode(registrationRequest.getClassCode());
         Registration course = modelMapper.map(registrationRequest, Registration.class);
