@@ -36,8 +36,8 @@ public class CourseController {
     public String addCourse(@RequestBody CourseRequest courseRequest, BindingResult result) {
         if (result.hasErrors()) {
             FieldError fieldError = result.getFieldError();
-            String error = String.format("course %s: %s", fieldError.getField(), fieldError.getDefaultMessage());
-            return error;
+            assert fieldError != null;
+            return String.format("course %s: %s", fieldError.getField(), fieldError.getDefaultMessage());
         }
 
         Course course = new Course();
