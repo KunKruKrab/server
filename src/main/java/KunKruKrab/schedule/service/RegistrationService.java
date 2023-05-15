@@ -1,5 +1,6 @@
 package KunKruKrab.schedule.service;
 
+import KunKruKrab.schedule.dto.Registration.RegisterToCourseRequest;
 import KunKruKrab.schedule.dto.Registration.RegistrationRequest;
 import KunKruKrab.schedule.dto.Registration.RegistrationResponse;
 import KunKruKrab.schedule.model.Registration;
@@ -73,7 +74,7 @@ public class RegistrationService {
         }
     }
 
-    public void registerToCourse(RegistrationRequest registrationRequest) {
+    public void registerToCourse(RegisterToCourseRequest registrationRequest) {
         UUID courseID = courseService.getCourseIdByClassCode(registrationRequest.getClassCode());
         Registration course = modelMapper.map(registrationRequest, Registration.class);
         course.setCourseID(courseID);

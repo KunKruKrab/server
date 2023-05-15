@@ -24,7 +24,7 @@ public class SecurityConfig {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/auth/**", "/health")//White list authorized without token
+                .requestMatchers("/auth/**", "/health", "registration")//White list authorized without token
                 .permitAll()
                 .anyRequest()
                 .authenticated()//any other request should be authenticated

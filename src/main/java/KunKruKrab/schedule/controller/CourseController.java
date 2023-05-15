@@ -2,12 +2,14 @@ package KunKruKrab.schedule.controller;
 
 import KunKruKrab.schedule.dto.Course.CourseRequest;
 import KunKruKrab.schedule.dto.Course.CourseResponse;
+import KunKruKrab.schedule.dto.Registration.RegisterToCourseRequest;
 import KunKruKrab.schedule.dto.Schedule.ScheduleRequest;
 import KunKruKrab.schedule.model.Course;
 import KunKruKrab.schedule.model.Role;
 import KunKruKrab.schedule.model.Schedule;
 import KunKruKrab.schedule.model.User;
 import KunKruKrab.schedule.service.CourseService;
+import KunKruKrab.schedule.service.RegistrationService;
 import KunKruKrab.schedule.service.ScheduleService;
 import KunKruKrab.schedule.service.UserService;
 import KunKruKrab.schedule.util.RandomClassCodeGenerator;
@@ -60,7 +62,7 @@ public class CourseController {
         course.setClassCode(RandomClassCodeGenerator.generateCode());
         course.setProfessor(user.getFullName());
         course.setCreatedAt(Instant.now());
-        courseService.create(course);
+        courseService.create(course, user.getId());
 
         for (ScheduleRequest schedule: courseRequest.getSchedule()) {
             Schedule s = new Schedule();
@@ -70,6 +72,7 @@ public class CourseController {
             s.setDay(schedule.getDay());
             scheduleService.create(s);
         }
+
         return "Create new course successfully";
     }
 }

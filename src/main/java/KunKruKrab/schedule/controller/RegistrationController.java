@@ -1,5 +1,6 @@
 package KunKruKrab.schedule.controller;
 
+import KunKruKrab.schedule.dto.Registration.RegisterToCourseRequest;
 import KunKruKrab.schedule.dto.Registration.RegistrationRequest;
 import KunKruKrab.schedule.dto.Registration.RegistrationResponse;
 import KunKruKrab.schedule.model.Registration;
@@ -37,7 +38,7 @@ public class RegistrationController {
     }
 
     @PostMapping
-    public String register(@Valid @RequestBody RegistrationRequest registration, BindingResult result, Principal principal) {
+    public String register(@Valid @RequestBody RegistrationRequest request, BindingResult result, Principal principal) {
         if (result.hasErrors()) {
             FieldError fieldError = result.getFieldError();
             assert fieldError != null;
@@ -46,11 +47,11 @@ public class RegistrationController {
 
         User user = userService.getUserByEmail(principal.getName());
 
-        System.out.println("User ID: " + user.getId());
+        RegisterToCourseRequest registerToCourse = new RegisterToCourseRequest();
+        registerToCourse.setUserID(user.getId());
+        registerToCourse.setClassCode(request.getClassCode());
 
-        registration.setUserID(user.getId());
-
-        registrationService.registerToCourse(registration);
+        registrationService.registerToCourse(registerToCourse);
         return "Register to course successfully";
     }
 }
