@@ -9,4 +9,5 @@ public class CourseResponse {
     private String classCode;
     private String name;
     private String description;
+    private String professor;
 }

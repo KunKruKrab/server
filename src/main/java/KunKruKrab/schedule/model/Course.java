@@ -19,5 +19,6 @@ public class Course {
     private String classCode;
     private String name;
     private String description;
+    private String professor;
     private Instant createdAt;
 }
