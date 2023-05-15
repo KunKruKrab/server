@@ -2,18 +2,16 @@ package KunKruKrab.schedule.controller;
 
 import KunKruKrab.schedule.dto.Course.CourseRequest;
 import KunKruKrab.schedule.dto.Course.CourseResponse;
-import KunKruKrab.schedule.dto.Registration.RegisterToCourseRequest;
 import KunKruKrab.schedule.dto.Schedule.ScheduleRequest;
 import KunKruKrab.schedule.model.Course;
 import KunKruKrab.schedule.model.Role;
 import KunKruKrab.schedule.model.Schedule;
 import KunKruKrab.schedule.model.User;
 import KunKruKrab.schedule.service.CourseService;
-import KunKruKrab.schedule.service.RegistrationService;
 import KunKruKrab.schedule.service.ScheduleService;
 import KunKruKrab.schedule.service.UserService;
 import KunKruKrab.schedule.util.RandomClassCodeGenerator;
-import jakarta.validation.Valid;
+import KunKruKrab.schedule.util.CheckTimeValid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -65,6 +63,9 @@ public class CourseController {
         courseService.create(course, user.getId());
 
         for (ScheduleRequest schedule: courseRequest.getSchedule()) {
+            if (!CheckTimeValid.verify(schedule.getStartTime(), schedule.getEndTime())) {
+                return "End time cannot be scheduled before start time";
+            }
             Schedule s = new Schedule();
             s.setCourseID(courseID);
             s.setStartTime(schedule.getStartTime());
