@@ -54,4 +54,8 @@ public class AuthService {
                 .role(user.getRole())
                 .build();
     }
+
+    public boolean isUsernameAvailable(String email) {
+        return userRepository.findByEmail(email).isEmpty();
+    }
 }
